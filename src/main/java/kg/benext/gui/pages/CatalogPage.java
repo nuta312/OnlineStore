@@ -3,6 +3,7 @@ package kg.benext.gui.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.clickable;
 import static com.codeborne.selenide.Condition.text;
@@ -107,6 +108,10 @@ public class CatalogPage extends BasePage<CatalogPage> {
         resetFiltersButton.shouldBe(clickable).click();
         return this;
     }
+
+//    public void checkProductCard () {
+//
+//    }
 
 //    public CatalogPage addProductToCart(String product) {
 //

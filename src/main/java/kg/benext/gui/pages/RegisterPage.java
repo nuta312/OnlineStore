@@ -1,6 +1,7 @@
 package kg.benext.gui.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import kg.benext.common.model.User;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.clickable;
@@ -120,6 +121,14 @@ public class RegisterPage extends BasePage<RegisterPage>{
 
     public RegisterPage verifyConfirmPasswordPlaceholder() {
         confirmPassword.shouldHave(attribute(PLACEHOLDER, "Confirm your password"));;
+        return this;
+    }
+
+    public RegisterPage fillRegistrationForm(User user) {
+        inputFullName(user.getFullName());
+        inputEmail(user.getEmail());
+        inputPassword(user.getPassword());
+        inputConfirmPassword(user.getPassword());
         return this;
     }
 }

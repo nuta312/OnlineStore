@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="gui.signUp.SignUpTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-04-14T13:02:59.508Z" hostname="LAPTOP-5VJ3FK7J" time="7.678">
+<testsuite name="gui.signUp.SignUpTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-04-14T19:17:08.898Z" hostname="LAPTOP-5VJ3FK7J" time="10.713">
   <properties/>
-  <testcase name="Verify all placeholders" classname="gui.signUp.SignUpTest" time="7.678"/>
+  <testcase name="Create user with valid Credentials" classname="gui.signUp.SignUpTest" time="10.713"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[Apr 14, 2026 5:03:01 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+  <system-err><![CDATA[Apr 14, 2026 11:17:11 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
 WARNING: Unable to find an exact match for CDP version 147, returning the closest version; found: 145; Please update to a Selenium version that supports CDP version 147
 ]]></system-err>
 </testsuite>

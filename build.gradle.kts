@@ -56,6 +56,12 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
     runtimeOnly("org.aspectj:aspectjweaver:$aspectjVersion")
     implementation("org.aspectj:aspectjtools:$aspectjVersion")
+
+    implementation("org.hibernate.orm:hibernate-core:7.3.1.Final")
+    implementation("org.postgresql:postgresql:42.7.10")
+    implementation("com.mchange:c3p0:0.12.0")
+    implementation("org.awaitility:awaitility:4.3.0")
+    implementation("org.mongodb:mongodb-driver-sync:5.6.5")
 }
 
 tasks.test {

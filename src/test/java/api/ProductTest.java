@@ -39,7 +39,8 @@ public class ProductTest {
         ProductRequest request = ProductRequest.builder()
                 .name("Iphone 17 pro")
                 .description("Apple device")
-                .imageFile("https://asiastore.kg/image/cache/catalog/1newpage/apple/iphone/iphone17/iphone17promax/silver/iphone_17_pro_max_silver_pdp_image_position_1__ce-ww-1200x1200.jpg")
+                .imageFile("https://asiastore.kg/image/cache/catalog/1newpage/apple/iphone/iphone17/iphone17promax" +
+                        "/silver/iphone_17_pro_max_silver_pdp_image_position_1__ce-ww-1200x1200.jpg")
                 .price(600L)
                 .categoryIds(List.of(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6")))
                 .brandName("apple")
