@@ -1,5 +1,6 @@
 package kg.benext.api.model.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import kg.benext.api.model.BaseModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,18 +14,22 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class OrderRequest extends BaseModel {
 
+    private String id;
     private String customerId;
     private String userName;
     private String orderName;
     private AddressRequest shippingAddress;
     private AddressRequest billingAddress;
     private PaymentRequest payment;
-    private List<OrderItemRequest> orderItems;
-    private String deliveryMethod;
+    private List<OrderItemRequest> Items;
+    private Integer deliveryMethod;
+    private Integer status;
     private Double deliveryCost;
     private String locale;
+
 
     @Data
     @Builder
@@ -60,6 +65,6 @@ public class OrderRequest extends BaseModel {
         private UUID productId;
         private Integer quantity;
         private Double price;
-        private String productNameSnapshot;
+        private String productName;
     }
 }

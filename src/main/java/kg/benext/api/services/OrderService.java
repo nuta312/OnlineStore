@@ -12,7 +12,13 @@ public class OrderService extends HttpRequest {
     }
 
     public CreateOrderResponse createOrder(OrderRequest request) {
-        return super.post(Endpoints.ORDERS, request.toJson())
-                .as(CreateOrderResponse.class);
+        super.post(Endpoints.ORDERS, request.toJson());
+
+        String body = getResponse().getBody().asString();
+        if (body == null || body.isEmpty()) {
+            return new CreateOrderResponse();
+        }
+
+        return getResponse().as(CreateOrderResponse.class);
     }
 }
