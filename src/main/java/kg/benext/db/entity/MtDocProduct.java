@@ -3,13 +3,16 @@ package kg.benext.db.entity;
 import jakarta.persistence.*;
 import kg.benext.db.entity.converter.ProductDataConverter;
 import kg.benext.db.entity.model.Product;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.OffsetDateTime;
 
 @Entity
+
 @Table(name = "mt_doc_product", schema = "public")
 public class MtDocProduct extends BaseDocument {
-
+    @JdbcTypeCode(SqlTypes.JSON)
     @Convert(converter = ProductDataConverter.class)
     @Column(name = "data", nullable = false, columnDefinition = "jsonb")
     private Product data;  // теперь сразу Product, не String
