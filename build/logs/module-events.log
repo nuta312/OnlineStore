@@ -1,0 +1,209 @@
+[2026-04-14] 07:26:53:097 HttpRequest: 29 [INFO ] - Performed GET /api/catalog/products
+[2026-04-14] 07:26:54:975 HttpRequest: 67 [WARN ] - Response is: 
+[2026-04-14] 07:26:55:076 HttpRequest: 68 [WARN ] - {
+    "products": [
+        {
+            "id": "ffc91150-2f5f-474e-bcd5-c84d0842bb46",
+            "name": "Nike Yoga Luxe Top",
+            "description": "Infinalon fabric for a buttery soft feel. Cropped length. Four-way stretch. Moisture-wicking.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/womens-dresses/Marni%20Red%20&%20Black%20Suit/1.png",
+            "price": 70,
+            "categoryIds": [
+                "5057f2ab-2013-44bc-8bf3-1afb73bb2477"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.6,
+            "reviewCount": 145,
+            "brandId": "3cd82a20-6be2-40e8-afb5-e52416aec909",
+            "brandName": "Nike"
+        },
+        {
+            "id": "fea670f7-b5af-4bd0-897a-d67984f97ddc",
+            "name": "IKEA 365+ Frying Pan",
+            "description": "Stainless steel with Teflon Platinum non-stick coating. Oven-safe up to 250°C. Durable and dishwasher safe. 28cm.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/kitchen-accessories/Frying%20Pan/1.png",
+            "price": 29,
+            "categoryIds": [
+                "7d7fd5e1-8da8-4688-aac2-5d9b008946a9"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.3,
+            "reviewCount": 445,
+            "brandId": "6beea6a1-a326-42b3-bd46-e67b788e4157",
+            "brandName": "IKEA"
+        },
+        {
+            "id": "fa2678dc-e59e-44dc-8005-e756b511662c",
+            "name": "IKEA MALM Bed Frame",
+            "description": "Clean and simple design. Real wood veneer. Adjustable bed sides for mattresses of different thickness. Queen size.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Bed/2.png",
+            "price": 249,
+            "categoryIds": [
+                "b56da871-a94c-4b4d-8ad8-699d6bda4639"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.4,
+            "reviewCount": 967,
+            "brandId": "6beea6a1-a326-42b3-bd46-e67b788e4157",
+            "brandName": "IKEA"
+        },
+        {
+            "id": "f7a32800-4f21-48ef-99e0-b31507fa1e10",
+            "name": "Nike Metcon 9",
+            "description": "Stable heel for heavy lifts. Flexible forefoot for agility. Rubber rope wrap for durability during climbs. Breathable mesh.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/sports-accessories/Cricket%20Bat/1.png",
+            "price": 150,
+            "categoryIds": [
+                "5b5673f1-8f1f-42ed-8f79-9354d873904e"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.7,
+            "reviewCount": 456,
+            "brandId": "3cd82a20-6be2-40e8-afb5-e52416aec909",
+            "brandName": "Nike"
+        },
+        {
+            "id": "f4a087dd-3edf-446a-84cd-540c0f1394f0",
+            "name": "IKEA KALLAX Shelf Unit",
+            "description": "Versatile storage unit that can be placed horizontally or vertically. Compatible with inserts and boxes. 77x147 cm.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Bed/1.png",
+            "price": 79,
+            "categoryIds": [
+                "b56da871-a94c-4b4d-8ad8-699d6bda4639"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.6,
+            "reviewCount": 1823,
+            "brandId": "6beea6a1-a326-42b3-bd46-e67b788e4157",
+            "brandName": "IKEA"
+        },
+        {
+            "id": "f1a81c08-c523-48d4-aae6-1ca1ac838ee2",
+            "name": "Samsung Galaxy Book4 Ultra",
+            "description": "Intel Core Ultra 9 processor. NVIDIA GeForce RTX 4070. 16-inch 3K AMOLED display. 1TB SSD.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/laptops/Huawei%20Matebook%20X%20Pro/1.png",
+            "price": 2399,
+            "categoryIds": [
+                "8df7780f-87f6-491c-9be8-3ae0523a66a4"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.5,
+            "reviewCount": 67,
+            "brandId": "ec8e88dd-54d6-430f-aed9-c410f518f8d3",
+            "brandName": "Samsung"
+        },
+        {
+            "id": "e8df31ef-c41f-4330-90c4-4f59f59f9433",
+            "name": "Apple AirTag Car Tracker",
+            "description": "Precision Finding for your vehicle. Water resistant. Privacy built-in. Replaceable battery. Year-long battery life.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/vehicle/Helmet/1.png",
+            "price": 29,
+            "categoryIds": [
+                "cf75a29f-77de-4633-8896-d1b565b99c18"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.6,
+            "reviewCount": 2345,
+            "brandId": "4086dedc-4402-4f36-bd8c-bf314dfc627d",
+            "brandName": "Apple"
+        },
+        {
+            "id": "e87761a3-3b99-4c61-b52c-519ae3925234",
+            "name": "Alpinestars GP Plus R V4 Jacket",
+            "description": "Full grain leather. CE Level 2 protectors at shoulders and elbows. Back protector pocket. Aerodynamic hump.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/vehicle/Car%20Engine%20Oil/2.png",
+            "price": 529,
+            "categoryIds": [
+                "e80ab26c-2b4f-4538-8fad-07197040eed8"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.7,
+            "reviewCount": 178,
+            "brandId": "3cd82a20-6be2-40e8-afb5-e52416aec909",
+            "brandName": "Nike"
+        },
+        {
+            "id": "e835586e-664a-479a-89e1-4bb9239da407",
+            "name": "IKEA VARDAGEN Cast Iron Pot",
+            "description": "Even heat distribution for perfect cooking. Enameled inside for easy cleaning. Works on all cooktops including induction.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/kitchen-accessories/Cooking%20Pot/1.png",
+            "price": 59,
+            "categoryIds": [
+                "7d7fd5e1-8da8-4688-aac2-5d9b008946a9"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.6,
+            "reviewCount": 312,
+            "brandId": "6beea6a1-a326-42b3-bd46-e67b788e4157",
+            "brandName": "IKEA"
+        },
+        {
+            "id": "e50e5164-2611-4dc6-8d23-f3e58c1ad7cc",
+            "name": "The Ordinary Niacinamide 10%",
+            "description": "High-strength vitamin and mineral blemish formula. Zinc PCA for oil control. Cruelty-free. Vegan. 30ml.",
+            "imageFile": "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png",
+            "price": 6,
+            "categoryIds": [
+                "1cae6ffb-1715-4966-b9d0-2cfd4658ac87"
+            ],
+            "translations": [
+                
+            ],
+            "averageRating": 4.5,
+            "reviewCount": 8901,
+            "brandId": "ec8e88dd-54d6-430f-aed9-c410f518f8d3",
+            "brandName": "Samsung"
+        }
+    ],
+    "pagination": {
+        "pageNumber": 1,
+        "pageSize": 10,
+        "totalCount": 91,
+        "totalPages": 10
+    }
+}
+[2026-04-14] 07:26:55:089 HttpRequest: 69 [WARN ] - Status code is: 200
+[2026-04-14] 07:27:13:125 HttpRequest: 29 [INFO ] - Performed GET /api/catalog/products/2a46cfb8-0a97-43d1-a60c-90f6e55ad047
+[2026-04-14] 07:27:14:762 HttpRequest: 67 [WARN ] - Response is: 
+[2026-04-14] 07:27:14:871 HttpRequest: 68 [WARN ] - {
+    "product": {
+        "id": "2a46cfb8-0a97-43d1-a60c-90f6e55ad047",
+        "name": "iPhone 17",
+        "description": "Apple",
+        "imageFile": "https://asiastore.kg/image/cache/catalog/1newpage/apple/iphone/iphone17/iphone17promax/silver/iphone_17_pro_max_silver_pdp_image_position_1__ce-ww-1200x1200.jpg",
+        "price": 1300000,
+        "categoryIds": [
+            "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        ],
+        "translations": [
+            {
+                "languageCode": "en",
+                "name": "english",
+                "description": "iPhone"
+            }
+        ],
+        "averageRating": 0,
+        "reviewCount": 0,
+        "brandId": "c0ac3239-2a1b-4b47-8e8c-9e855af15b6c",
+        "brandName": "apple"
+    }
+}
+[2026-04-14] 07:27:14:877 HttpRequest: 69 [WARN ] - Status code is: 200
