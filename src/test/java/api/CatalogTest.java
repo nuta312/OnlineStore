@@ -1,9 +1,12 @@
 package api;
 
 import kg.benext.api.model.request.FavoriteRequest;
+import kg.benext.api.model.request.ProductRequest;
 import kg.benext.api.model.response.*;
 import kg.benext.api.services.*;
+import kg.benext.common.utils.TestDataGenerator;
 import kg.benext.common.utils.file.ConfigurationManager;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -19,6 +22,12 @@ public class CatalogTest extends BaseAPI {
     CategoryService categoryService = new CategoryService(baseUrl);
     FavoriteService favoriteService = new FavoriteService(baseUrl);
     ProductService productService = new ProductService(baseUrl);
+    String token;
+
+    @BeforeEach
+    void setUp() {
+        token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+    }
 
     @Test
     void getBrandsTest() {
@@ -52,9 +61,7 @@ public class CatalogTest extends BaseAPI {
 
     @Test
     void getFavoritesTest() {
-        String token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
         favoriteService.withToken(token);
-
         FavoriteListResponse response = favoriteService.getFavorites();
 
         step("Статус 200", () ->
@@ -66,37 +73,46 @@ public class CatalogTest extends BaseAPI {
     }
 
     @Test
-    void addToFavoritesTest() {
-        String token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+    void addAndRemoveFromFavoritesTest() {
         favoriteService.withToken(token);
+        productService.withToken(token);
 
-        SuccessResponse response = favoriteService.addToFavorites(
-                FavoriteRequest.builder()
-                        .productId(UUID.fromString("ffc91150-2f5f-474e-bcd5-c84d0842bb46"))
-                        .build()
+        // Получаем случайный продукт из списка
+        ProductListResponse products = productService.getProducts();
+        UUID randomProductId = products.getProducts()
+                .get(new java.util.Random().nextInt(products.getProducts().size()))
+                .getId();
+
+        // Добавляем в избранное
+        SuccessResponse addResponse = favoriteService.addToFavorites(
+                FavoriteRequest.builder().productId(randomProductId).build()
+        );
+        step("Добавление: статус 200", () ->
+                assertEquals(200, favoriteService.getResponse().getStatusCode())
+        );
+        step("isSuccess = true", () ->
+                assertTrue(addResponse.getIsSuccess())
         );
 
-        assertEquals(200, favoriteService.getResponse().getStatusCode());
-        assertTrue(response.getIsSuccess());
-    }
-
-    @Test
-    void removeFromFavoritesTest() {
-        String token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
-        favoriteService.withToken(token);
-
-        SuccessResponse response = favoriteService.removeFromFavorites(
-                "ffc91150-2f5f-474e-bcd5-c84d0842bb46"
+        // Удаляем из избранного
+        SuccessResponse removeResponse = favoriteService.removeFromFavorites(randomProductId.toString());
+        step("Удаление: статус 200", () ->
+                assertEquals(200, favoriteService.getResponse().getStatusCode())
         );
-
-        assertEquals(200, favoriteService.getResponse().getStatusCode());
-        assertTrue(response.getIsSuccess());
+        step("isSuccess = true", () ->
+                assertTrue(removeResponse.getIsSuccess())
+        );
     }
 
     @Test
     void getProductsByCategoryTest() {
-        String categoryId = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
-        ProductListResponse response = productService.getProductsByCategory(categoryId);
+        // Получаем случайную категорию
+        List<CategoryResponse> categories = categoryService.getCategories();
+        UUID randomCategoryId = categories
+                .get(new java.util.Random().nextInt(categories.size()))
+                .getId();
+
+        ProductListResponse response = productService.getProductsByCategory(randomCategoryId.toString());
 
         step("Статус 200", () ->
                 assertEquals(200, productService.getResponse().getStatusCode())

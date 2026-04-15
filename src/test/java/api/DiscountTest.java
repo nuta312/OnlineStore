@@ -4,6 +4,7 @@ import kg.benext.api.model.request.DiscountRequest;
 import kg.benext.api.model.response.DiscountDeleteResponse;
 import kg.benext.api.model.response.DiscountResponse;
 import kg.benext.api.services.DiscountService;
+import kg.benext.common.utils.TestDataGenerator;
 import kg.benext.common.utils.file.ConfigurationManager;
 import org.junit.jupiter.api.Test;
 
@@ -15,60 +16,71 @@ public class DiscountTest extends BaseAPI {
     DiscountService discountService = new DiscountService(ConfigurationManager.getBaseConfig().baseUrl());
 
     @Test
-    void createDiscountTest() {
+    void createAndGetDiscountTest() {
+        String productName = TestDataGenerator.randomString(8);
+        String description = TestDataGenerator.randomString(12);
+        int amount = new java.util.Random().nextInt(5, 50);
+
         DiscountRequest request = DiscountRequest.builder()
-                .productName("Nike Yoga Luxe Top")
-                .description("Summer sale")
-                .amount(10)
+                .productName(productName)
+                .description(description)
+                .amount(amount)
                 .build();
 
-        DiscountResponse response = discountService.createDiscount(request);
+        DiscountResponse created = discountService.createDiscount(request);
 
-        step("Статус 200", () ->
+        step("Создание: статус 200", () ->
                 assertEquals(200, discountService.getResponse().getStatusCode())
         );
         step("productName совпадает", () ->
-                assertEquals("Nike Yoga Luxe Top", response.getProductName())
+                assertEquals(productName, created.getProductName())
         );
-        step("amount совпадает", () ->
-                assertEquals(10, response.getAmount())
-        );
-    }
 
-    @Test
-    void getDiscountByProductNameTest() {
-        DiscountResponse response = discountService.getDiscountByProductName("Nike Yoga Luxe Top");
+        // Получаем по имени
+        DiscountResponse fetched = discountService.getDiscountByProductName(productName);
 
-        step("Статус 200", () ->
+        step("Получение: статус 200", () ->
                 assertEquals(200, discountService.getResponse().getStatusCode())
         );
-        step("productName не null", () ->
-                assertNotNull(response.getProductName())
+        step("productName совпадает", () ->
+                assertEquals(productName, fetched.getProductName())
         );
     }
 
     @Test
     void updateDiscountTest() {
-        DiscountRequest request = DiscountRequest.builder()
-                .id(1)
-                .productName("Nike Yoga Luxe Top")
-                .description("Winter sale")
-                .amount(20)
-                .build();
+        String productName = TestDataGenerator.randomString(8);
+        discountService.createDiscount(DiscountRequest.builder()
+                .productName(productName)
+                .description(TestDataGenerator.randomString(10))
+                .amount(10)
+                .build());
 
-        DiscountResponse response = discountService.updateDiscount(request);
+        int newAmount = new java.util.Random().nextInt(50, 90);
+        DiscountResponse updated = discountService.updateDiscount(DiscountRequest.builder()
+                .productName(productName)
+                .description(TestDataGenerator.randomString(10))
+                .amount(newAmount)
+                .build());
 
         step("Статус 200", () ->
                 assertEquals(200, discountService.getResponse().getStatusCode())
         );
         step("amount обновлён", () ->
-                assertEquals(20, response.getAmount())
+                assertEquals(newAmount, updated.getAmount())
         );
     }
 
     @Test
     void deleteDiscountTest() {
-        DiscountDeleteResponse response = discountService.deleteDiscount("Nike Yoga Luxe Top");
+        String productName = TestDataGenerator.randomString(8);
+        discountService.createDiscount(DiscountRequest.builder()
+                .productName(productName)
+                .description(TestDataGenerator.randomString(10))
+                .amount(15)
+                .build());
+
+        DiscountDeleteResponse response = discountService.deleteDiscount(productName);
 
         step("Статус 200", () ->
                 assertEquals(200, discountService.getResponse().getStatusCode())

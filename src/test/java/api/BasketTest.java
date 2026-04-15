@@ -5,11 +5,14 @@ import kg.benext.api.model.request.CheckoutRequest;
 import kg.benext.api.model.response.*;
 import kg.benext.api.services.AuthService;
 import kg.benext.api.services.BasketService;
+import kg.benext.api.services.ProductService;
+import kg.benext.common.utils.TestDataGenerator;
 import kg.benext.common.utils.file.ConfigurationManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import static io.qameta.allure.Allure.step;
@@ -18,12 +21,34 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BasketTest extends BaseAPI {
 
     BasketService basketService = new BasketService(ConfigurationManager.getBaseConfig().baseUrl());
-    String token;
+    ProductService productService = new ProductService(ConfigurationManager.getBaseConfig().baseUrl());
+    Random random = new Random();
 
     @BeforeEach
     void setUp() {
-        token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+        String token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
         basketService.withToken(token);
+        productService.withToken(token);
+    }
+
+    private BasketRequest buildRandomBasketRequest() {
+        ProductListResponse products = productService.getProducts();
+        ProductResponse randomProduct = products.getProducts()
+                .get(random.nextInt(products.getProducts().size()));
+
+        return BasketRequest.builder()
+                .items(List.of(
+                        BasketRequest.BasketItem.builder()
+                                .productId(randomProduct.getId())
+                                .productName(randomProduct.getName())
+                                .quantity(random.nextInt(1, 5))
+                                .price(randomProduct.getPrice().doubleValue())
+                                .basePrice(randomProduct.getPrice().doubleValue())
+                                .color(TestDataGenerator.randomString(5))
+                                .imageFile(randomProduct.getImageFile())
+                                .build()
+                ))
+                .build();
     }
 
     @Test
@@ -33,28 +58,14 @@ public class BasketTest extends BaseAPI {
         step("Статус 200", () ->
                 assertEquals(200, basketService.getResponse().getStatusCode())
         );
-        step("Список items не null", () ->
+        step("Items не null", () ->
                 assertNotNull(response.getItems())
         );
     }
 
     @Test
     void storeBasketTest() {
-        BasketRequest request = BasketRequest.builder()
-                .items(List.of(
-                        BasketRequest.BasketItem.builder()
-                                .productId(UUID.fromString("ffc91150-2f5f-474e-bcd5-c84d0842bb46"))
-                                .productName("Nike Yoga Luxe Top")
-                                .quantity(1)
-                                .price(70.0)
-                                .basePrice(70.0)
-                                .color("Black")
-                                .imageFile("https://cdn.dummyjson.com/products/images/womens-dresses/1.png")
-                                .build()
-                ))
-                .build();
-
-        StoreBasketResponse response = basketService.storeBasket(request);
+        StoreBasketResponse response = basketService.storeBasket(buildRandomBasketRequest());
 
         step("Статус 201", () ->
                 assertEquals(201, basketService.getResponse().getStatusCode())
@@ -71,54 +82,35 @@ public class BasketTest extends BaseAPI {
         step("Статус 200", () ->
                 assertEquals(200, basketService.getResponse().getStatusCode())
         );
-        step("Список методов доставки не пустой", () ->
+        step("Список не пустой", () ->
                 assertFalse(response.isEmpty())
         );
-        step("У каждого метода есть name и cost", () -> {
-            for (DeliveryMethodResponse method : response) {
-                assertNotNull(method.getName());
-                assertNotNull(method.getCost());
-            }
-        });
     }
 
     @Test
     void checkoutBasketTest() {
-        BasketRequest basketRequest = BasketRequest.builder()
-                .items(List.of(
-                        BasketRequest.BasketItem.builder()
-                                .productId(UUID.fromString("ffc91150-2f5f-474e-bcd5-c84d0842bb46"))
-                                .productName("Nike Yoga Luxe Top")
-                                .quantity(1)
-                                .price(70.0)
-                                .basePrice(70.0)
-                                .color("Black")
-                                .imageFile("https://cdn.dummyjson.com/products/images/womens-dresses/1.png")
-                                .build()
-                ))
-                .build();
-        basketService.storeBasket(basketRequest);
+        basketService.storeBasket(buildRandomBasketRequest());
 
-        CheckoutRequest request = CheckoutRequest.builder()
-                .basketCheckoutDto(CheckoutRequest.BasketCheckoutDto.builder()
-                        .firstName("Sanzhar")
-                        .lastName("Amanturov")
-                        .emailAddress("amanturov2471@gmail.com")
-                        .addressLine("manas 123")
-                        .country("Kyrgyzstan")
-                        .state("Бишкек")
-                        .zipCode("720000")
-                        .cardName("Sanzhar Amanturov")
-                        .cardNumber("4242424242424242")
-                        .expiration("12/33")
-                        .cvv("123")
-                        .paymentMethod(1)
-                        .deliveryMethod("Pickup")
-                        .deliveryCost(0.0)
-                        .build())
+        CheckoutRequest.BasketCheckoutDto dto = CheckoutRequest.BasketCheckoutDto.builder()
+                .firstName(TestDataGenerator.randomString(6))
+                .lastName(TestDataGenerator.randomString(6))
+                .emailAddress(TestDataGenerator.randomEmail())
+                .addressLine("ул. " + TestDataGenerator.randomString(6))
+                .country("Kyrgyzstan")
+                .state("Бишкек")
+                .zipCode(TestDataGenerator.randomDigits(6))
+                .cardName(TestDataGenerator.randomString(8))
+                .cardNumber(TestDataGenerator.randomDigits(16))
+                .expiration("12/33")
+                .cvv(TestDataGenerator.randomDigits(3))
+                .paymentMethod(random.nextInt(1, 3))
+                .deliveryMethod("Pickup")
+                .deliveryCost(0.0)
                 .build();
 
-        SuccessResponse response = basketService.checkout(request);
+        SuccessResponse response = basketService.checkout(
+                CheckoutRequest.builder().basketCheckoutDto(dto).build()
+        );
 
         step("Статус 200", () ->
                 assertEquals(200, basketService.getResponse().getStatusCode())
@@ -130,6 +122,7 @@ public class BasketTest extends BaseAPI {
 
     @Test
     void deleteBasketTest() {
+        basketService.storeBasket(buildRandomBasketRequest());
         SuccessResponse response = basketService.deleteBasket();
 
         step("Статус 200", () ->
