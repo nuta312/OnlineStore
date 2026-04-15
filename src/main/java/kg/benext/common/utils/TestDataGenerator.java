@@ -116,7 +116,7 @@ public class TestDataGenerator {
                 .payment(randomPayment())
                 .Items(List.of(randomOrderItem()))
                 .status(RANDOM.nextInt(1, 5))
-                .deliveryMethod(RANDOM.nextInt(1, 4))
+                .deliveryMethod(RANDOM.nextInt(1, 3))
                 .deliveryCost((double) RANDOM.nextInt(100, 500))
                 .locale("en")
                 .build();

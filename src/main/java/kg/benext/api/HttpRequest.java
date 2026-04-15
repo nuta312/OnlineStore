@@ -77,4 +77,14 @@ public class HttpRequest {
         }
         return endPoint.substring(0,endPoint.length()-1);
     }
+
+    public HttpRequest withToken(String token) {
+        this.requestSpecification = given()
+                .baseUri(url)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("Authorization", "Bearer " + token);
+        return this;
+    }
+
 }
