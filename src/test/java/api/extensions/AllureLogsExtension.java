@@ -1,6 +1,7 @@
 package api.extensions;
 
 import io.qameta.allure.Allure;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.LogEvent;
@@ -96,7 +97,7 @@ public class AllureLogsExtension implements BeforeEachCallback, AfterEachCallbac
 
         return sb.toString();
     }
-
+    @Getter
     private static class InMemoryLog4j2Appender extends AbstractAppender {
 
         private final List<LogEntry> entries = new ArrayList<>();
