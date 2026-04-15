@@ -23,6 +23,7 @@ public class Endpoints {
 
     // Ordering
     public static final String ORDERS = "/api/ordering/orders";
+    public static final String ORDER_BY_ID = "/api/ordering/orders/%s";
 
     // Basket
     public static final String BASKET = "/api/basket";
