@@ -11,9 +11,10 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.UUID;
 
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ProductTest {
+public class ProductTest extends BaseAPI{
 
     ProductService productService = new ProductService(ConfigurationManager.getBaseConfig().baseUrl());
 
@@ -28,10 +29,21 @@ public class ProductTest {
     public void getProductsTest() {
         ProductListResponse response = productService.getProducts();
 
-        assertEquals(200, productService.getResponse().getStatusCode());
-        assertNotNull(response.getProducts());
-        assertFalse(response.getProducts().isEmpty());
-        assertEquals(10, response.getPagination().getPageSize());
+        step("Проверка HTTP статус-кода — ожидается 200 OK", () ->
+                assertEquals(200, productService.getResponse().getStatusCode())
+        );
+
+        step("Проверка что список продуктов не null", () ->
+                assertNotNull(response.getProducts())
+        );
+
+        step("Проверка что список продуктов не пустой", () ->
+                assertFalse(response.getProducts().isEmpty())
+        );
+
+        step("Проверка размера страницы пагинации — ожидается 10 элементов", () ->
+                assertEquals(10, response.getPagination().getPageSize())
+        );
     }
 
     @Test
