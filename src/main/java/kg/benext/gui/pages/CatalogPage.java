@@ -4,10 +4,19 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class CatalogPage {
     private final SelenideElement searchInput = $("[placeholder='Search products...']");
+    private final SelenideElement firstCard      = $$("div[role='article']").first();
+    private final SelenideElement addToCartBtn   = $x("//button[@title='Add to Cart']");
+
+    @Step("Add first product to cart")
+    public CatalogPage addFirstProductToCart() {
+        firstCard.shouldBe(visible);
+        addToCartBtn.shouldBe(visible).shouldBe(enabled).click();
+        return this;
+    }
 
     @Step("Search product by name")
     public CatalogPage searchProduct(String productName) {
