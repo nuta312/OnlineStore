@@ -5,6 +5,7 @@ import kg.benext.api.model.response.CreateProductResponse;
 import kg.benext.api.model.response.ProductListResponse;
 import kg.benext.api.model.response.ProductResponse;
 import kg.benext.api.services.ProductService;
+import kg.benext.common.utils.TestDataGenerator;
 import kg.benext.common.utils.file.ConfigurationManager;
 import org.junit.jupiter.api.Test;
 
@@ -36,23 +37,7 @@ public class ProductTest {
 
     @Test
     public void createProductTest() {
-        ProductRequest request = ProductRequest.builder()
-                .name("Iphone 17 pro")
-                .description("Apple device")
-                .imageFile("https://asiastore.kg/image/cache/catalog/1newpage/apple/iphone/iphone17/iphone17promax" +
-                        "/silver/iphone_17_pro_max_silver_pdp_image_position_1__ce-ww-1200x1200.jpg")
-                .price(600L)
-                .categoryIds(List.of(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6")))
-                .brandName("apple")
-                .translations(List.of(
-                        ProductRequest.TranslationRequest.builder()
-                                .languageCode("en")
-                                .name("english")
-                                .description("test")
-                                .build()
-                ))
-                .build();
-
+        ProductRequest request = TestDataGenerator.randomProductRequest();
         CreateProductResponse response = productService.createProduct(request);
 
         assertEquals(201, productService.getResponse().getStatusCode());
