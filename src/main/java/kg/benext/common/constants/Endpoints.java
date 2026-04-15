@@ -29,4 +29,8 @@ public class Endpoints {
     public static final String BASKET_CHECKOUT = "/api/basket/checkout";
     public static final String BASKET_DELIVERY_METHODS = "/api/basket/delivery-methods";
 
+    // Discount
+    public static final String DISCOUNT = "/discount-swagger/api/v1/discount";
+    public static final String DISCOUNT_BY_NAME = "/discount-swagger/api/v1/discount/%s";
+
 }
