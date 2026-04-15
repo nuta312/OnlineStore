@@ -16,6 +16,7 @@ val aspectjVersion       = "1.9.25.1"
 
 plugins {
     id("java")
+    id("io.qameta.allure") version "3.2.0"  // ← downgrade from 2.11.2
 }
 
 group = "kg.benext"
@@ -62,8 +63,10 @@ dependencies {
     implementation("com.mchange:c3p0:0.12.0")
     implementation("org.awaitility:awaitility:4.3.0")
     implementation("org.mongodb:mongodb-driver-sync:5.6.5")
+    implementation("org.seleniumhq.selenium:selenium-devtools-v137:4.35.0")
 }
 
 tasks.test {
     useJUnitPlatform()
+    systemProperty("allure.results.directory", "${layout.buildDirectory.get()}/allure-results")
 }
