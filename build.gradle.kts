@@ -63,6 +63,7 @@ dependencies {
     implementation("com.mchange:c3p0:0.12.0")
     implementation("org.awaitility:awaitility:4.3.0")
     implementation("org.mongodb:mongodb-driver-sync:5.6.5")
+    implementation("org.seleniumhq.selenium:selenium-devtools-v137:4.35.0")
 }
 
 tasks.test {
