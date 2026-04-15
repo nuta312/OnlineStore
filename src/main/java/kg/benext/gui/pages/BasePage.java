@@ -1,4 +1,5 @@
 package kg.benext.gui.pages;
 
-public class BasePage {
+public abstract class BasePage<T extends BasePage<T>> {
+    public abstract T waitForPageToBeLoaded();
 }

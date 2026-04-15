@@ -5,15 +5,17 @@ import kg.benext.api.model.response.CreateProductResponse;
 import kg.benext.api.model.response.ProductListResponse;
 import kg.benext.api.model.response.ProductResponse;
 import kg.benext.api.services.ProductService;
+import kg.benext.common.utils.TestDataGenerator;
 import kg.benext.common.utils.file.ConfigurationManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.UUID;
 
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ProductTest {
+public class ProductTest extends BaseAPI{
 
     ProductService productService = new ProductService(ConfigurationManager.getBaseConfig().baseUrl());
 
@@ -28,30 +30,26 @@ public class ProductTest {
     public void getProductsTest() {
         ProductListResponse response = productService.getProducts();
 
-        assertEquals(200, productService.getResponse().getStatusCode());
-        assertNotNull(response.getProducts());
-        assertFalse(response.getProducts().isEmpty());
-        assertEquals(10, response.getPagination().getPageSize());
+        step("Проверка HTTP статус-кода — ожидается 200 OK", () ->
+                assertEquals(200, productService.getResponse().getStatusCode())
+        );
+
+        step("Проверка что список продуктов не null", () ->
+                assertNotNull(response.getProducts())
+        );
+
+        step("Проверка что список продуктов не пустой", () ->
+                assertFalse(response.getProducts().isEmpty())
+        );
+
+        step("Проверка размера страницы пагинации — ожидается 10 элементов", () ->
+                assertEquals(10, response.getPagination().getPageSize())
+        );
     }
 
     @Test
     public void createProductTest() {
-        ProductRequest request = ProductRequest.builder()
-                .name("Iphone 17 pro")
-                .description("Apple device")
-                .imageFile("https://asiastore.kg/image/cache/catalog/1newpage/apple/iphone/iphone17/iphone17promax/silver/iphone_17_pro_max_silver_pdp_image_position_1__ce-ww-1200x1200.jpg")
-                .price(600L)
-                .categoryIds(List.of(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6")))
-                .brandName("apple")
-                .translations(List.of(
-                        ProductRequest.TranslationRequest.builder()
-                                .languageCode("en")
-                                .name("english")
-                                .description("test")
-                                .build()
-                ))
-                .build();
-
+        ProductRequest request = TestDataGenerator.randomProductRequest();
         CreateProductResponse response = productService.createProduct(request);
 
         assertEquals(201, productService.getResponse().getStatusCode());
