@@ -1,0 +1,8 @@
+.gradle/
+.idea/
+build/
+*.lock
+*.bin
+*.probe
+allure-results/
+allure-report/
