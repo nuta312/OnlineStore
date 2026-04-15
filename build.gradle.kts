@@ -16,6 +16,7 @@ val aspectjVersion       = "1.9.25.1"
 
 plugins {
     id("java")
+    id("io.qameta.allure") version "2.11.2"
 }
 
 group = "kg.benext"
@@ -66,4 +67,5 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    systemProperty("allure.results.directory", "${layout.buildDirectory.get()}/allure-results")
 }
