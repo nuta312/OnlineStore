@@ -24,4 +24,9 @@ public class Endpoints {
     // Ordering
     public static final String ORDERS = "/api/ordering/orders";
 
+    // Basket
+    public static final String BASKET = "/api/basket";
+    public static final String BASKET_CHECKOUT = "/api/basket/checkout";
+    public static final String BASKET_DELIVERY_METHODS = "/api/basket/delivery-methods";
+
 }
