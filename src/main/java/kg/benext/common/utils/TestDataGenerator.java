@@ -35,7 +35,7 @@ public class TestDataGenerator {
             "https://wl-adme.cf.tsp.li/resize/728x/jpg/cfb/0d0/638dad5ed8a52e9904d62f3bd8.jpg"
     };
 
-    /**
+    /*
      * Generates a fully random ProductRequest.
      */
     public static ProductRequest randomProductRequest() {
@@ -54,7 +54,7 @@ public class TestDataGenerator {
                 .build();
     }
 
-    /**
+    /*
      * Returns a builder pre-filled with random values — override only what you need.
      *
      * <pre>
@@ -99,7 +99,7 @@ public class TestDataGenerator {
 
     private static final String[] CITIES = {"Бишкек", "Ош", "Жалал-Абад", "Каракол", "Токмок"};
 
-    /**
+    /*
      * Generates a fully random OrderRequest.
      */
     public static OrderRequest randomOrderRequest() {
@@ -114,7 +114,7 @@ public class TestDataGenerator {
                 .shippingAddress(address)
                 .billingAddress(address)
                 .payment(randomPayment())
-                .Items(List.of(randomOrderItem()))
+                .items(List.of(randomOrderItem()))
                 .status(RANDOM.nextInt(1, 5))
                 .deliveryMethod(RANDOM.nextInt(1, 3))
                 .deliveryCost((double) RANDOM.nextInt(100, 500))
@@ -122,7 +122,7 @@ public class TestDataGenerator {
                 .build();
     }
 
-    /**
+    /*
      * Returns a builder pre-filled with random values — override only what you need.
      *
      * <pre>
@@ -141,7 +141,7 @@ public class TestDataGenerator {
                 .shippingAddress(filled.getShippingAddress())
                 .billingAddress(filled.getBillingAddress())
                 .payment(filled.getPayment())
-                .Items(filled.getItems())
+                .items(filled.getItems())
                 .status(filled.getStatus())
                 .deliveryMethod(filled.getDeliveryMethod())
                 .deliveryCost(filled.getDeliveryCost())
@@ -150,7 +150,7 @@ public class TestDataGenerator {
 
     public static OrderRequest.AddressRequest randomAddress() {
         String firstName = randomElement(FIRST_NAMES);
-        String lastName  = randomElement(LAST_NAMES);
+        String lastName = randomElement(LAST_NAMES);
         return OrderRequest.AddressRequest.builder()
                 .firstName(firstName)
                 .lastName(lastName)
@@ -167,7 +167,8 @@ public class TestDataGenerator {
         return OrderRequest.PaymentRequest.builder()
                 .cardName(randomString(8))
                 .cardNumber(randomDigits(16))
-                .expiration(String.format("%02d/%02d", RANDOM.nextInt(1, 13), RANDOM.nextInt(24, 30)))
+                .expiration(String.format("%02d/%02d", RANDOM.nextInt(1, 13), RANDOM.nextInt(24,
+                        30)))
                 .cvv(randomDigits(3))
                 .paymentMethod(RANDOM.nextInt(1, 4))
                 .build();

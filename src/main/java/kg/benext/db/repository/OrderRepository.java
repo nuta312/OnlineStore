@@ -60,4 +60,41 @@ public class OrderRepository {
         }
         return buffer;
     }
+
+    public Document waitForLatestOrderByCustomerId(String customerId, String productId) {
+        Awaitility.await()
+                .atMost(1, TimeUnit.MINUTES)
+                .pollInterval(5, TimeUnit.SECONDS)
+                .until(() -> {
+                    List<Document> orders = getCollection()
+                            .find(Filters.eq("customerId.value", customerId))
+                            .sort(new Document("createdAt", -1))
+                            .into(new ArrayList<>());
+
+                    return orders.stream().anyMatch(order -> {
+                        List<Document> items = (List<Document>) order.get("orderItems");
+                        if (items == null) return false;
+                        return items.stream().anyMatch(item -> {
+                            Object val = item.get("productId", Document.class).get("value");
+                            if (val instanceof org.bson.types.Binary binary) {
+                                return uuidFromBinary(binary).toString().equals(productId);
+                            }
+                            return val.toString().equals(productId);
+                        });
+                    });
+                });
+
+        return getCollection()
+                .find(Filters.eq("customerId.value", customerId))
+                .sort(new Document("createdAt", -1))
+                .first();
+    }
+
+    private UUID uuidFromBinary(org.bson.types.Binary binary) {
+        byte[] bytes = binary.getData();
+        long msb = 0, lsb = 0;
+        for (int i = 0; i < 8; i++) msb = (msb << 8) | (bytes[i] & 0xff);
+        for (int i = 8; i < 16; i++) lsb = (lsb << 8) | (bytes[i] & 0xff);
+        return new UUID(msb, lsb);
+    }
 }
