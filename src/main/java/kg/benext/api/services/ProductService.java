@@ -6,6 +6,9 @@ import kg.benext.api.model.request.ProductRequest;
 import kg.benext.api.model.request.UpdateProductRequest;
 import kg.benext.api.model.response.*;
 import kg.benext.common.constants.Endpoints;
+import kg.benext.api.model.request.ReviewRequest;
+import kg.benext.api.model.response.CreateReviewResponse;
+import kg.benext.api.model.response.ReviewListResponse;
 
 public class ProductService extends HttpRequest {
 
@@ -51,8 +54,21 @@ public class ProductService extends HttpRequest {
                 .as(ProductListResponse.class);
     }
 
-    @Step("Delete review {id}")
-    public void deleteReview(String id) {
-        super.delete(String.format(Endpoints.REVIEWS, id));
+    @Step("Delete review {reviewId}")
+    public SuccessResponse deleteReview(String reviewId) {
+        return super.delete(String.format(Endpoints.REVIEWS, reviewId))
+                .as(SuccessResponse.class);
+    }
+
+    @Step("Get reviews for product {productId}")
+    public ReviewListResponse getProductReviews(String productId) {
+        return super.get(String.format(Endpoints.PRODUCT_REVIEWS, productId))
+                .as(ReviewListResponse.class);
+    }
+
+    @Step("Create review for product {productId}")
+    public CreateReviewResponse createReview(String productId, ReviewRequest request) {
+        return super.post(String.format(Endpoints.PRODUCT_REVIEWS, productId), request.toJson())
+                .as(CreateReviewResponse.class);
     }
 }

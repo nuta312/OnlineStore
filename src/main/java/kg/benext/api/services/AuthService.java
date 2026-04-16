@@ -3,6 +3,8 @@ package kg.benext.api.services;
 import java.net.URI;
 import java.net.http.HttpClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kg.benext.api.model.request.AuthRequest;
+
 import java.net.http.HttpResponse;
 
 public class AuthService {
@@ -13,11 +15,12 @@ public class AuthService {
     public static String getToken(String email, String password) {
         try {
             String url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + API_KEY;
-
-            String body = String.format(
-                    "{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}",
-                    email, password
-            );
+            String body = AuthRequest.builder()
+                    .email(email)
+                    .password(password)
+                    .returnSecureToken(true)
+                    .build()
+                    .toJson();
 
             HttpClient client = HttpClient.newHttpClient();
             java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
