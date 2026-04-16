@@ -114,7 +114,7 @@ public class TestDataGenerator {
                 .shippingAddress(address)
                 .billingAddress(address)
                 .payment(randomPayment())
-                .Items(List.of(randomOrderItem()))
+                .items(List.of(randomOrderItem()))
                 .status(RANDOM.nextInt(1, 5))
                 .deliveryMethod(RANDOM.nextInt(1, 3))
                 .deliveryCost((double) RANDOM.nextInt(100, 500))
@@ -141,7 +141,7 @@ public class TestDataGenerator {
                 .shippingAddress(filled.getShippingAddress())
                 .billingAddress(filled.getBillingAddress())
                 .payment(filled.getPayment())
-                .Items(filled.getItems())
+                .items(filled.getItems())
                 .status(filled.getStatus())
                 .deliveryMethod(filled.getDeliveryMethod())
                 .deliveryCost(filled.getDeliveryCost())
@@ -150,7 +150,7 @@ public class TestDataGenerator {
 
     public static OrderRequest.AddressRequest randomAddress() {
         String firstName = randomElement(FIRST_NAMES);
-        String lastName  = randomElement(LAST_NAMES);
+        String lastName = randomElement(LAST_NAMES);
         return OrderRequest.AddressRequest.builder()
                 .firstName(firstName)
                 .lastName(lastName)
@@ -167,7 +167,8 @@ public class TestDataGenerator {
         return OrderRequest.PaymentRequest.builder()
                 .cardName(randomString(8))
                 .cardNumber(randomDigits(16))
-                .expiration(String.format("%02d/%02d", RANDOM.nextInt(1, 13), RANDOM.nextInt(24, 30)))
+                .expiration(String.format("%02d/%02d", RANDOM.nextInt(1, 13), RANDOM.nextInt(24,
+                        30)))
                 .cvv(randomDigits(3))
                 .paymentMethod(RANDOM.nextInt(1, 4))
                 .build();

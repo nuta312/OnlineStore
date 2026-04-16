@@ -1,6 +1,5 @@
 package api;
 
-import io.qameta.allure.Step;
 import kg.benext.api.model.request.OrderRequest;
 import kg.benext.api.model.response.CreateOrderResponse;
 import kg.benext.api.model.response.OrderListResponse;
