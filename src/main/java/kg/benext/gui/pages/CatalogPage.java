@@ -22,19 +22,12 @@ public class CatalogPage extends BasePage<CatalogPage> {
     private final SelenideElement nextButton     = $$("button").findBy(Condition.text("chevron_right"));
     private final SelenideElement dropdown       = $("button[role='combobox']");
 
-    // ══════════════════════════════════════════════════════
-    // ЗАГРУЗКА СТРАНИЦЫ
-    // ══════════════════════════════════════════════════════
-
     @Override
     public CatalogPage waitForPageToBeLoaded() {
         $("header").$(byText("be-next")).shouldBe(visible);
         return this;
     }
 
-    // ══════════════════════════════════════════════════════
-    // ДЕЙСТВИЯ
-    // ══════════════════════════════════════════════════════
 
     @Step("Add first product to cart")
     public CatalogPage addFirstProductToCart() {
@@ -127,10 +120,6 @@ public class CatalogPage extends BasePage<CatalogPage> {
                 .click();
         return this;
     }
-
-    // ══════════════════════════════════════════════════════
-    // ПРОВЕРКИ
-    // ══════════════════════════════════════════════════════
 
     @Step("Get product card by name")
     public SelenideElement getProductByName(String productName) {
