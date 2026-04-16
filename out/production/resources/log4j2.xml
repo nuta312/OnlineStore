@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+
+        <!-- ERROR + FATAL - выводим в SYSTEM_ERR -->
+        <Console name="ErrorFatal" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d{[yyyy-MM-dd] HH:mm:ss:SSS} %c{1}: %L [%-5p] - %m%n"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <!-- WARN -->
+        <Console name="Warn" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{[yyyy-MM-dd] HH:mm:ss:SSS} %c{1}: %L [%-5p] - %m%n"/>
+            <LevelRangeFilter minLevel="WARN" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <!-- INFO -->
+        <Console name="Info" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{[yyyy-MM-dd] HH:mm:ss:SSS} %c{1}: %L [%-5p] - %m%n"/>
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <!-- DEBUG -->
+        <Console name="Debug" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{[yyyy-MM-dd] HH:mm:ss:SSS} %c{1}: %L [%-5p] - %m%n"/>
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <!-- FILE - rolling daily, путь исправлен на build/ под Gradle -->
+        <RollingFile name="FILES"
+                     fileName="build/logs/module-events.log"
+                     filePattern="build/logs/module-events-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{[yyyy-MM-dd] HH:mm:ss:SSS} %c{1}: %L [%-5p] - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- Дополнительно ротируем если файл вырос больше 10MB -->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <!-- Храним логи за последние 30 дней -->
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <!-- Глушим шумные логи от сторонних библиотек -->
+        <Logger name="org.littleshoot"              level="OFF"  additivity="false"/>
+        <Logger name="io.restassured"               level="WARN" additivity="false"/>
+        <Logger name="org.apache.http"              level="WARN" additivity="false"/>
+        <Logger name="io.netty"                     level="WARN" additivity="false"/>
+        <Logger name="com.codeborne.selenide"       level="WARN" additivity="false"/>
+        <Logger name="org.openqa.selenium"          level="WARN" additivity="false"/>
+        <Logger name="io.github.bonigarcia"         level="WARN" additivity="false"/>
+
+        <Root level="INFO">
+            <AppenderRef ref="ErrorFatal"/>
+            <AppenderRef ref="Warn"/>
+            <AppenderRef ref="Info"/>
+            <AppenderRef ref="Debug"/>
+            <AppenderRef ref="FILES"/>
+        </Root>
+    </Loggers>
+</Configuration>
