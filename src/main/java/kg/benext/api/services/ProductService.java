@@ -20,10 +20,21 @@ public class ProductService extends HttpRequest {
                 .getProduct();
     }
 
+    @Step("Get product by id raw {id}")
+    public void getProductByIdRaw(String id) {
+        super.get(String.format(Endpoints.PRODUCTS, id));
+        // Не десериализуем — просто делаем запрос
+    }
+
     @Step("Get products")
     public ProductListResponse getProducts() {
         return super.get(Endpoints.PRODUCTS_LIST)
                 .as(ProductListResponse.class);
+    }
+
+    @Step("Get reviews by product id {productId}")
+    public void getReviews(String productId) {
+        super.get(String.format(Endpoints.REVIEWS, productId));
     }
 
     @Step("Create new product {}")
