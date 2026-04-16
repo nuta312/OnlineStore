@@ -2,9 +2,11 @@ package kg.benext.gui.pages;
 
 import com.codeborne.selenide.SelenideElement;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class LoginPage extends BasePage<LoginPage>{
@@ -12,8 +14,7 @@ public class LoginPage extends BasePage<LoginPage>{
     private final SelenideElement email = $("input[name='email']");
     private final SelenideElement password = $("input[name='password']");
     private final SelenideElement signInBtn = $x("//button[text()='Sign In']");
-
-
+private final SelenideElement authError = $$("div").findBy(text("Invalid email or password"));
 
     @Override
     public LoginPage waitForPageToBeLoaded() {
@@ -39,5 +40,15 @@ public class LoginPage extends BasePage<LoginPage>{
     public HomePage clickToSignIn() {
         signInBtn.shouldBe(visible).click();
         return new HomePage();
+    }
+
+    public LoginPage clickToSignInExpectError() {
+        signInBtn.shouldBe(visible).click();
+        return this;
+    }
+
+    public LoginPage verifyAuthError(){
+        authError.shouldBe(visible);
+        return this;
     }
 }
