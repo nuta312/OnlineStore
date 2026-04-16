@@ -16,7 +16,7 @@ public class SignUpTest extends BaseGUI {
     @Test
     @DisplayName("Create user with valid Credentials")
     void createUserTest() {
-        User user = RandomData.randomUser();
+        User user = RandomData.defaultUser();
             new HomePage()
                 .clickToLogin().waitForPageToBeLoaded()
                 .clickToRegisterBtn().waitForPageToBeLoaded()
