@@ -24,7 +24,7 @@ public class OrderRequest extends BaseModel {
     private AddressRequest shippingAddress;
     private AddressRequest billingAddress;
     private PaymentRequest payment;
-    private List<OrderItemRequest> Items;
+    private List<OrderItemRequest> items;
     private Integer deliveryMethod;
     private Integer status;
     private Double deliveryCost;
