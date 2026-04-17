@@ -24,7 +24,7 @@ public class ProductOrderTest {
 
     @BeforeEach
     void setUp() {
-        String token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+        String token = new AuthService().getToken("amanturov2471@gmail.com", "naryn25");
         basketService.withToken(token);
         productService.withToken(token);
         orderService.withToken(token);

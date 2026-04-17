@@ -11,18 +11,23 @@ import kg.benext.api.services.AuthService;
 import kg.benext.api.services.BasketService;
 import kg.benext.api.services.DiscountService;
 import kg.benext.api.services.ProductService;
+import kg.benext.common.annotations.Area;
+import kg.benext.common.annotations.TestCaseId;
 import kg.benext.common.utils.TestDataGenerator;
 import kg.benext.common.utils.file.ConfigurationManager;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
+import static kg.benext.common.constants.FunctionalArea.BASKET;
+import static kg.benext.common.constants.TestTypes.REGRESSION;
+import static kg.benext.common.constants.TestTypes.SMOKE;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Area(BASKET)
+@Tags({@Tag(SMOKE), @Tag(REGRESSION)})
 @Epic("Basket & Auth E2E")
 public class BasketFlowTest extends BaseAPI {
 
@@ -30,14 +35,16 @@ public class BasketFlowTest extends BaseAPI {
     ProductService productService = new ProductService(ConfigurationManager.getBaseConfig().baseUrl());
     DiscountService discountService = new DiscountService(ConfigurationManager.getBaseConfig().baseUrl());
 
+
+
     // E2E-006: Получение Firebase JWT токена
+    @TestCaseId("E2E-006")
     @Test
-    @Feature("Auth")
-    @Story("E2E-006 — Получение Firebase JWT токена")
+    @DisplayName("E2E-006 — Получение Firebase JWT токена")
     void getFirebaseTokenTest() {
         // Шаг 1: отправить POST к Firebase signInWithPassword
         String token = step("POST Firebase Auth API с email/password", () ->
-                AuthService.getToken("day26@gmail.com", "day123")
+                new AuthService().getToken("day26@gmail.com", "day123")
         );
 
         // Шаг 2: проверить, что idToken присутствует в ответе
@@ -55,6 +62,7 @@ public class BasketFlowTest extends BaseAPI {
     // -----------------------------------------------------------------------
     // E2E-007: Доступ к корзине без токена → 401 Unauthorized
     // -----------------------------------------------------------------------
+
 
     @Test
     @DisplayName("E2E-007: Доступ к корзине без токена")
@@ -80,7 +88,7 @@ public class BasketFlowTest extends BaseAPI {
 
     @BeforeEach
     void setUp() {
-        String token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+        String token = new AuthService().getToken("amanturov2471@gmail.com", "naryn25");
         basketService.withToken(token);
         productService.withToken(token);
         discountService.withToken(token);

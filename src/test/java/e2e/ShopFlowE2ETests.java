@@ -39,8 +39,8 @@ public class ShopFlowE2ETests {
 
     @BeforeEach
     void setUp() {
-        customerId = AuthService.getCustomerId("amanturov2471@gmail.com", "naryn25");
-        token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+        customerId = new AuthService().getCustomerId("amanturov2471@gmail.com", "naryn25");
+        token = new AuthService().getToken("amanturov2471@gmail.com", "naryn25");
     }
 
     @Test

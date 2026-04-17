@@ -22,7 +22,7 @@ public class ReviewTest extends BaseAPI {
 
     @BeforeEach
     void setUp() {
-        String token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+        String token = new AuthService().getToken("amanturov2471@gmail.com", "naryn25");
         productService.withToken(token);
     }
 
