@@ -11,7 +11,9 @@ import kg.benext.common.utils.file.ConfigurationManager;
 public class AuthService extends HttpRequest {
 
     public AuthService() {
-        super(ConfigurationManager.getBaseConfig().firebaseUrl());
+        super(ConfigurationManager.getBaseConfig().firebaseUrl()
+                + "?key="
+                + ConfigurationManager.getBaseConfig().firebaseApiKey());
     }
 
     @Step("Get customer token")
@@ -23,7 +25,7 @@ public class AuthService extends HttpRequest {
                 .build()
                 .toJson();
 
-        return super.post("?key=" + ConfigurationManager.getBaseConfig().firebaseApiKey(), body)
+        return super.post("", body)
                 .jsonPath().getString("idToken");
     }
 
@@ -36,7 +38,7 @@ public class AuthService extends HttpRequest {
                 .build()
                 .toJson();
 
-        return super.post("?key=" + ConfigurationManager.getBaseConfig().firebaseApiKey(), body)
+        return super.post("", body)
                 .jsonPath().getString("localId");
     }
 }
