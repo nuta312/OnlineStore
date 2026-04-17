@@ -6,3 +6,4 @@ build/
 *.probe
 allure-results/
 allure-report/
+notifications/

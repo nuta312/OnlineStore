@@ -1,35 +1,57 @@
 package kg.benext.api.services;
 
-import java.net.URI;
-import java.net.http.HttpClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.net.http.HttpResponse;
+import io.qameta.allure.Step;
+import kg.benext.api.HttpRequest;
+import kg.benext.api.model.request.AuthRequest;
+import kg.benext.common.utils.file.ConfigurationManager;
 
-public class AuthService {
+import java.net.URI;
 
-    private static final String FIREBASE_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword";
-    private static final String API_KEY = "AIzaSyBPP_MzdxmjW_5Gt-xJqkPl1sJMTo-znCo";
+public class AuthService extends kg.benext.api.HttpRequest {
 
-    public static String getToken(String email, String password) {
+    public AuthService() {
+        super(ConfigurationManager.getBaseConfig().firebaseUrl());
+    }
+
+    @Step("Get customer token")
+    public String getToken(String email, String password) {
+        return getField(email, password, "idToken");
+    }
+
+    @Step("Get customer id")
+    public String getCustomerId(String email, String password) {
+        return getField(email, password, "localId");
+    }
+
+    private String getField(String email, String password, String field) {
         try {
-            String url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + API_KEY;
+            String url = ConfigurationManager.getBaseConfig().firebaseUrl()
+                    + "?key="
+                    + ConfigurationManager.getBaseConfig().firebaseApiKey();
 
-            String body = String.format(
-                    "{\"email\":\"%s\",\"password\":\"%s\",\"returnSecureToken\":true}",
-                    email, password
-            );
+            String body = AuthRequest.builder()
+                    .email(email)
+                    .password(password)
+                    .returnSecureToken(true)
+                    .build()
+                    .toJson();
 
-            HttpClient client = HttpClient.newHttpClient();
+            java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
             java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .header("Content-Type", "application/json")
                     .POST(java.net.http.HttpRequest.BodyPublishers.ofString(body))
                     .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            java.net.http.HttpResponse<String> response = client.send(
+                    request, java.net.http.HttpResponse.BodyHandlers.ofString()
+            );
 
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readTree(response.body()).get("idToken").asText();
+            return new ObjectMapper()
+                    .readTree(response.body())
+                    .get(field)
+                    .asText();
 
         } catch (Exception e) {
             throw new RuntimeException("Auth failed", e);

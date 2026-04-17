@@ -8,9 +8,15 @@ import static com.codeborne.selenide.Condition.clickable;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Favorites {
+public class Favorites extends BasePage<Favorites> {
     SelenideElement goToCatalogBtn = $("main a[href='/catalog']");
     ElementsCollection allItems = $$("div[role='article']");
+
+    @Override
+    public Favorites waitForPageToBeLoaded() {
+        $("nav[aria-label= 'Breadcrumb']").shouldBe(visible);
+        return this;
+    }
 
     @Step("Click catalog btn when no items")
     public Favorites clickCatalog() {

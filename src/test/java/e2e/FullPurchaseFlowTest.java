@@ -67,7 +67,7 @@ public class FullPurchaseFlowTest extends BaseAPI {
         // ШАГ 1: [Auth] POST Firebase → получить JWT токен
         // AuthService.getToken() делает POST к Firebase Identity API
         // и возвращает idToken — JWT строку вида "eyJ..."
-        String token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+        String token = new AuthService().getToken("amanturov2471@gmail.com", "naryn25");
 
         // Проверяем что токен получен успешно
         assertNotNull(token,  "JWT токен не должен быть null — Firebase аутентификация провалилась");

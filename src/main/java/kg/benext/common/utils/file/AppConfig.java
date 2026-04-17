@@ -26,5 +26,9 @@ public interface AppConfig extends Config {
     @Key("basket.db.name")
     String basketDbName();
 
+    @Key("firebase.customer.api.key")
+    String firebaseApiKey();
 
+    @Key("firebase.url")
+    String firebaseUrl();
 }

@@ -9,6 +9,7 @@ public class Endpoints {
     public static final String PRODUCTS_UPDATE = "/api/catalog/products";
 
     // Catalog - Reviews
+    public static final String PRODUCT_REVIEWS = "/api/catalog/products/%s/reviews";
     public static final String REVIEWS = "/api/catalog/reviews/%s";
 
     // Catalog - Categories

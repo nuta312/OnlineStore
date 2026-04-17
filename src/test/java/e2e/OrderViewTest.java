@@ -24,7 +24,7 @@ public class OrderViewTest extends BaseE2E {
     @BeforeEach
     void setUp() {
         // User A
-        String tokenA = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+        String tokenA = new AuthService().getToken("amanturov2471@gmail.com", "naryn25");
         orderServiceA.withToken(tokenA);
 
         // Создаём заказ как предусловие (аналог E2E-013)
@@ -34,7 +34,7 @@ public class OrderViewTest extends BaseE2E {
         System.out.println("Предусловие: создан заказ с ID: " + createdOrderId);
 
         // User B
-        String tokenB = AuthService.getToken("JohnDoe@example.com", "123456");
+        String tokenB = new AuthService().getToken("JohnDoe@example.com", "123456");
         orderServiceB.withToken(tokenB);
     }
 

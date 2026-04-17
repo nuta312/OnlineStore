@@ -3,7 +3,10 @@ package kg.benext.db.config;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-
+import kg.benext.common.utils.file.AppConfig;
+import kg.benext.common.utils.file.ConfigurationManager;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 public class MongoConfig {
 
     private static MongoClient orderingMongoClient;
@@ -15,7 +18,13 @@ public class MongoConfig {
         if (orderingMongoClient == null) {
             synchronized (MongoConfig.class) {
                 if (orderingMongoClient == null) {
-                    orderingMongoClient = MongoClients.create("mongodb://5.129.193.163:27017");
+                    AppConfig config = ConfigurationManager.getBaseConfig();
+                    String user = config.dbUserName();
+                    String password = config.dbPassword();
+                    String encodedPassword = URLEncoder.encode(password, StandardCharsets.UTF_8);
+                    orderingMongoClient = MongoClients.create(
+                            "mongodb://" + user + ":" + encodedPassword + "@5.129.193.163:27017"
+                    );
                 }
             }
         }

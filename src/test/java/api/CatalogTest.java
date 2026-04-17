@@ -1,20 +1,25 @@
 package api;
 
 import kg.benext.api.model.request.FavoriteRequest;
-import kg.benext.api.model.request.ProductRequest;
 import kg.benext.api.model.response.*;
 import kg.benext.api.services.*;
-import kg.benext.common.utils.TestDataGenerator;
+import kg.benext.common.annotations.Area;
 import kg.benext.common.utils.file.ConfigurationManager;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.UUID;
 
 import static io.qameta.allure.Allure.step;
+import static kg.benext.common.constants.FunctionalArea.CATALOG;
+import static kg.benext.common.constants.TestTypes.REGRESSION;
+import static kg.benext.common.constants.TestTypes.SMOKE;
 import static org.junit.jupiter.api.Assertions.*;
-
+@Area(CATALOG)
+@Tags({@Tag(SMOKE), @Tag(REGRESSION)})
 public class CatalogTest extends BaseAPI {
 
     String baseUrl = ConfigurationManager.getBaseConfig().baseUrl();
@@ -26,7 +31,7 @@ public class CatalogTest extends BaseAPI {
 
     @BeforeEach
     void setUp() {
-        token = AuthService.getToken("amanturov2471@gmail.com", "naryn25");
+        token = new AuthService().getToken("amanturov2471@gmail.com", "naryn25");
     }
 
     @Test

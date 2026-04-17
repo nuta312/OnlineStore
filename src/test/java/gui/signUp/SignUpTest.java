@@ -1,6 +1,7 @@
 package gui.signUp;
 
 import gui.BaseGUI;
+import kg.benext.common.annotations.Retry;
 import kg.benext.common.model.User;
 import kg.benext.common.utils.data.RandomData;
 import kg.benext.gui.pages.HomePage;
@@ -13,7 +14,9 @@ import static com.codeborne.selenide.WebDriverConditions.urlContaining;
 
 public class SignUpTest extends BaseGUI {
 
+
     @Test
+    @Retry(2)
     @DisplayName("Create user with valid Credentials")
     void createUserTest() {
         User user = RandomData.defaultUser();
