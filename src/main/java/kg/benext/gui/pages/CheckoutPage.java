@@ -16,18 +16,18 @@ public class CheckoutPage extends BasePage<CheckoutPage> {
     private final SelenideElement inputEmail         = $x("//input[@name='email']");
     private final SelenideElement inputPhone         = $x("//input[@name='phone']");
 
-// способы доставки
+    // способы доставки
     private final SelenideElement selfDeliveryBtn       = $x("//span[text()='Самовывоз']");
     private final SelenideElement byCourierDeliveryBtn  = $x("//span[text()='Доставка курьером']");
 
-// адрес
+    // адрес
     private final SelenideElement inputAddress       = $x("//input[@name='addressLine']");
     private final SelenideElement inputApartment     = $x("//input[@name='apartment']");
     private final SelenideElement inputFloor         = $x("//input[@name='floor']");
     private final SelenideElement inputEntryphone    = $x("//input[@name='intercom']");
     private final SelenideElement inputComment       = $x("//textarea[@name='comment']");
 
-// оплата картой
+    // оплата картой
     private final SelenideElement inputCardNumber    = $x("//input[@name='cardNumber']");
     private final SelenideElement inputExpirationDate = $x("//input[@name='expiration']");
     private final SelenideElement inputCvv           = $x("//input[@name='cvv']");
@@ -77,6 +77,27 @@ public class CheckoutPage extends BasePage<CheckoutPage> {
 
     public CheckoutPage checkPayBtnVisible() {
         toPayBtn.shouldBe(visible).shouldBe(enabled);
+        return this;
+    }
+
+    // TC-CHECKOUT-006
+    public CheckoutPage checkSSLBadgeVisible() {
+        sslBadge.shouldBe(visible);
+        return this;
+    }
+
+    public CheckoutPage checkSSLBadgeText() {
+        sslBadge.shouldHave(text("Безопасная оплата через SSL"));
+        return this;
+    }
+
+    public CheckoutPage checkTotalPriceVisible() {
+        totalPrice.shouldBe(visible);
+        return this;
+    }
+
+    public CheckoutPage checkDeliveryPriceVisible() {
+        deliveryPrice.shouldBe(visible);
         return this;
     }
 

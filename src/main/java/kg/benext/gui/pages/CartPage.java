@@ -2,6 +2,7 @@ package kg.benext.gui.pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import kg.benext.common.utils.file.ConfigurationManager;
 
 import java.time.Duration;
 
@@ -28,7 +29,7 @@ public class CartPage extends BasePage<CartPage> {
         return this;
     }
 
-// smoke
+    // smoke
     public CartPage checkPageTitleHasText() {
         pageTitle.shouldHave(text("Корзина"));
         return this;
@@ -91,7 +92,7 @@ public class CartPage extends BasePage<CartPage> {
         return this;
     }
 
-// regression
+    // regression
     public CartPage checkInvalidPromoCodeNotApplied(String invalidCode) {
         String priceBefore = totalPrice.shouldBe(visible).getText();
         inputPromoCode.shouldBe(visible).setValue(invalidCode);
@@ -154,7 +155,7 @@ public class CartPage extends BasePage<CartPage> {
         if (emptyCartMsg.exists()) {
             $x("//a[text()='Каталог']").shouldBe(visible).click();
             new CatalogPage().addFirstProductToCart();
-            open("http://5.129.193.163/cart");
+            open(ConfigurationManager.getBaseConfig().baseUrl() + "/cart");
             pageTitle.shouldBe(visible, Duration.ofSeconds(10));
         }
         addProduct.shouldBe(visible, Duration.ofSeconds(10))
@@ -163,7 +164,7 @@ public class CartPage extends BasePage<CartPage> {
         return this;
     }
 
-// e2e
+    // e2e
     public CartPage goToCatalogIfCartIsEmpty() {
         if (emptyCartMsg.exists()) {
             navToCatalog.shouldBe(visible).shouldBe(enabled).click();
@@ -187,7 +188,7 @@ public class CartPage extends BasePage<CartPage> {
             navToCatalog.shouldBe(visible).shouldBe(enabled).click();
             Selenide.webdriver().shouldHave(urlContaining("/catalog"), Duration.ofSeconds(10));
             new CatalogPage().addFirstProductToCart();
-            open("http://5.129.193.163/cart");
+            open(ConfigurationManager.getBaseConfig().baseUrl() + "/cart");
             pageTitle.shouldBe(visible, Duration.ofSeconds(10));
         }
         makeOrderBtn.shouldBe(visible).shouldBe(enabled).click();

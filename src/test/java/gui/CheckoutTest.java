@@ -1,5 +1,7 @@
 package gui;
 
+import gui.extensions.Retry;
+import kg.benext.common.utils.file.ConfigurationManager;
 import kg.benext.gui.pages.CheckoutPage;
 import org.junit.jupiter.api.*;
 
@@ -13,7 +15,7 @@ public class CheckoutTest extends BaseGUI {
 
     @BeforeEach
     void openCheckout() {
-        open("http://5.129.193.163/checkout");
+        open(ConfigurationManager.getBaseConfig().baseUrl() + "/checkout");
         if ($("button.bg-primary").exists()) {
             $("button.bg-primary").shouldBe(visible).click();
             $("input[name='email']").shouldBe(visible).sendKeys("altynai@gmail.com");
@@ -23,7 +25,10 @@ public class CheckoutTest extends BaseGUI {
         checkoutPage.waitForPageToBeLoaded();
     }
 
+// ─── smoke ────────────────────────────────────────────────────────────────────
+
     @Test
+    @Retry(3)
     @Tag("smoke")
     @DisplayName("TC-CHECKOUT-001: Поля контактных данных отображаются")
     void checkContactFieldsVisible() {
@@ -31,6 +36,7 @@ public class CheckoutTest extends BaseGUI {
     }
 
     @Test
+    @Retry(3)
     @Tag("smoke")
     @DisplayName("TC-CHECKOUT-002: Кнопки выбора доставки отображаются")
     void checkDeliveryOptionsVisible() {
@@ -38,6 +44,7 @@ public class CheckoutTest extends BaseGUI {
     }
 
     @Test
+    @Retry(3)
     @Tag("smoke")
     @DisplayName("TC-CHECKOUT-003: Поля адреса отображаются")
     void checkAddressFieldsVisible() {
@@ -45,6 +52,7 @@ public class CheckoutTest extends BaseGUI {
     }
 
     @Test
+    @Retry(3)
     @Tag("smoke")
     @DisplayName("TC-CHECKOUT-004: Поля оплаты картой отображаются")
     void checkCardFieldsVisible() {
@@ -52,43 +60,83 @@ public class CheckoutTest extends BaseGUI {
     }
 
     @Test
+    @Retry(3)
     @Tag("smoke")
     @DisplayName("TC-CHECKOUT-005: Кнопка «Оплатить» видима и активна")
     void checkPayBtnVisible() {
         checkoutPage.checkPayBtnVisible();
     }
 
+    @Test
+    @Retry(3)
+    @Tag("smoke")
+    @DisplayName("TC-CHECKOUT-006: Бейдж «Безопасная оплата через SSL» отображается")
+    void checkSSLBadgeVisible() {
+        checkoutPage.checkSSLBadgeVisible();
+    }
 
     @Test
+    @Retry(3)
     @Tag("smoke")
     @DisplayName("TC-CHECKOUT-007: Все поля доступны для ввода")
     void checkAllFieldsAreEditable() {
         checkoutPage.checkAllFieldsAreEditable();
     }
 
+    @Test
+    @Retry(3)
+    @Tag("smoke")
+    @DisplayName("TC-CHECKOUT-008: Итоговая сумма отображается")
+    void checkTotalPriceVisible() {
+        checkoutPage.checkTotalPriceVisible();
+    }
 
     @Test
+    @Retry(3)
+    @Tag("smoke")
+    @DisplayName("TC-CHECKOUT-009: Стоимость доставки отображается")
+    void checkDeliveryPriceVisible() {
+        checkoutPage.checkDeliveryPriceVisible();
+    }
+
+// ─── regression ───────────────────────────────────────────────────────────────
+
+    @Test
+    @Retry(3)
     @Tag("regression")
-    @DisplayName("TC-CHECKOUT-008: Самовывоз — доставка бесплатная")
+    @DisplayName("TC-CHECKOUT-010: Самовывоз — доставка бесплатная")
     void checkSelfDeliveryIsFree() {
         checkoutPage.checkSelfDeliveryIsFree();
     }
 
     @Test
+    @Retry(3)
     @Tag("regression")
-    @DisplayName("TC-CHECKOUT-009: Доставка курьером — стоимость 200 KGS")
+    @DisplayName("TC-CHECKOUT-011: Доставка курьером — стоимость 200 KGS")
     void checkCourierDeliveryPrice() {
         checkoutPage.checkCourierDeliveryPrice();
     }
 
     @Test
+    @Retry(3)
     @Tag("regression")
-    @DisplayName("TC-CHECKOUT-010: Смена способа доставки меняет итоговую сумму")
+    @DisplayName("TC-CHECKOUT-012: Смена способа доставки меняет итоговую сумму")
     void checkTotalChangesOnDeliverySwitch() {
         checkoutPage.checkTotalChangesOnDeliverySwitch();
     }
 
     @Test
+    @Retry(3)
+    @Tag("regression")
+    @DisplayName("TC-CHECKOUT-013: Текст SSL бейджа корректный")
+    void checkSSLBadgeText() {
+        checkoutPage.checkSSLBadgeText();
+    }
+
+// ─── e2e ──────────────────────────────────────────────────────────────────────
+
+    @Test
+    @Retry(2)
     @Tag("e2e")
     @DisplayName("TC-CHECKOUT-E2E-001: Заполнить форму с самовывозом → оплатить")
     void e2ePayWithSelfDelivery() {
@@ -96,6 +144,7 @@ public class CheckoutTest extends BaseGUI {
     }
 
     @Test
+    @Retry(2)
     @Tag("e2e")
     @DisplayName("TC-CHECKOUT-E2E-002: Заполнить форму с курьером → оплатить")
     void e2ePayWithCourierDelivery() {
